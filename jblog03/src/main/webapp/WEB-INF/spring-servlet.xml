@@ -15,6 +15,18 @@
 	<!-- DefaultServlet Handler -->
 	<mvc:default-servlet-handler />
 	
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth"/>
+			<bean class="jblog.security.LoginInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"/>
+			<bean class="jblog.security.LogoutInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<!-- View Resolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -32,5 +44,5 @@
 
 	<context:annotation-config />
 	<context:component-scan
-		base-package="jblog.controller, jblog.service, jblog.repository" />
+		base-package="jblog.controller, jblog.exception" />
 </beans>

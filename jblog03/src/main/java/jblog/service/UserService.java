@@ -17,6 +17,10 @@ public class UserService {
 		userRepository.insert(userVo);
 	}
 	
+	// 로그인
+	public UserVo getUser(String id, String password) {
+		return userRepository.findByIdAndPassword(id, password);
+	}
 	
 
 }

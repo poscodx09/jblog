@@ -7,4 +7,9 @@
 			insert into user values(#{id}, #{name}, #{password})
 		]]>
 	</insert>
+	<select id="findByIdAndPassword" parameterType="map" resultType="uservo">
+		<![CDATA[
+			select id, name from user where id=#{id} and password=#{password}
+		]]>
+	</select>
 </mapper>
