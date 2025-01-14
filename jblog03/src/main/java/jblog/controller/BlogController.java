@@ -1,15 +1,24 @@
 package jblog.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.validation.Valid;
+import jblog.security.Auth;
+import jblog.security.AuthUser;
 import jblog.service.BlogService;
+import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
+import jblog.vo.UserVo;
 
 @Controller
 @RequestMapping("/{userId:(?!assets).*}")
@@ -46,31 +55,52 @@ public class BlogController {
 		return "blog/main";
 	}
 	
-//	@Auth
-	@RequestMapping(value="/admin/default", method=RequestMethod.GET)
-	public String admin() {
+	@Auth
+	@GetMapping("/admin/default")
+	public String adminDefault() {
 		return "blog/admin-default";
 	}
 	
-//	@Auth
-	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
-	public String write() {
+	
+	@Auth
+	@GetMapping("/admin/write")
+	public String adminWrite() {
 		return "blog/admin-write";
 	}
 	
-//	@Auth
-	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
+	@Auth
+	@PostMapping("/admin/write")
 	public String write(
 			@PathVariable(value="userId") String userId,
 			PostVo vo,
 			Model model) {
 		blogService.addPost(vo);
-		return "redirect:/blog/" + userId + "/admin/write";
+		return "redirect:/" + userId + "/admin/write";
 	}
 	
-//	@Auth
-	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
-	public String category() {
+	@Auth
+	@GetMapping("/admin/category")
+	public String category(@AuthUser UserVo authUser, Model model) {
+		System.out.println("authUser" + authUser.getId());
+		List<CategoryVo> list = blogService.selectCategories(authUser.getId());
+		model.addAttribute("categoryList", list);
 		return "blog/admin-category";
+	}
+	
+	@Auth
+	@PostMapping("/admin/category")
+	public String category(
+			@AuthUser UserVo authUser,
+			@PathVariable(value="userId") String userId,
+			@ModelAttribute @Valid CategoryVo categoryVo,
+			BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "blog/admin-category";
+		}
+		categoryVo.setBlogId(authUser.getId());
+		blogService.addCategory(categoryVo);
+		return "redirect:/" + userId + "/admin/category";
 	}
 }
