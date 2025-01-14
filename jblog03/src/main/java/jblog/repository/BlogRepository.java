@@ -38,7 +38,6 @@ public class BlogRepository {
 	
 	// 카테고리 목록 조회
 	public List<CategoryVo> selectCategories(String blogId) {
-		System.out.println("blogId" + blogId);
 		return sqlSession.selectList("blog.selectCategories", blogId);
 	}
 }

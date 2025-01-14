@@ -9,6 +9,6 @@
 	<ul>
 		<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
 		<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
-		<li><a href="${pageContext.request.contextPath }/${authUser.id }/admin/default">블로그 관리</a></li>
+		<li><a href="${pageContext.request.contextPath }/${authUser.id }/admin">블로그 관리</a></li>
 	</ul>
 </div>

@@ -51,7 +51,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String requestURI = request.getRequestURI();
         String[] uriParts = requestURI.split("/"); 
         String blogId = (uriParts.length > 2) ? uriParts[2] : null;
-        System.out.println("BLOGID"+ blogId);
         
         if (blogId == null) {
         	return true;  

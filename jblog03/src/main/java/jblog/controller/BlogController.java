@@ -56,7 +56,7 @@ public class BlogController {
 	}
 	
 	@Auth
-	@GetMapping("/admin/default")
+	@GetMapping("/admin")
 	public String adminDefault() {
 		return "blog/admin-default";
 	}
@@ -64,7 +64,11 @@ public class BlogController {
 	
 	@Auth
 	@GetMapping("/admin/write")
-	public String adminWrite() {
+	public String adminWrite(
+			@AuthUser UserVo authUser,
+			Model model) {
+		List<CategoryVo> list = blogService.selectCategories(authUser.getId());
+		model.addAttribute("categoryList", list);
 		return "blog/admin-write";
 	}
 	
@@ -72,16 +76,17 @@ public class BlogController {
 	@PostMapping("/admin/write")
 	public String write(
 			@PathVariable(value="userId") String userId,
-			PostVo vo,
+			@ModelAttribute @Valid PostVo postVo,
 			Model model) {
-		blogService.addPost(vo);
-		return "redirect:/" + userId + "/admin/write";
+		System.out.println(userId);
+		System.out.println("post" + postVo);
+		blogService.addPost(postVo);
+		return "redirect:/" + userId + "/admin";
 	}
 	
 	@Auth
 	@GetMapping("/admin/category")
 	public String category(@AuthUser UserVo authUser, Model model) {
-		System.out.println("authUser" + authUser.getId());
 		List<CategoryVo> list = blogService.selectCategories(authUser.getId());
 		model.addAttribute("categoryList", list);
 		return "blog/admin-category";
@@ -95,6 +100,7 @@ public class BlogController {
 			@ModelAttribute @Valid CategoryVo categoryVo,
 			BindingResult result,
 			Model model) {
+		
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
 			return "blog/admin-category";
