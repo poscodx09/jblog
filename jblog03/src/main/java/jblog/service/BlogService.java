@@ -28,5 +28,14 @@ public class BlogService {
 	public List<CategoryVo> selectCategories(String blogId) {
 		return blogRepository.selectCategories(blogId);
 	}
+	
+	public List<PostVo> findPostsByCategoryId(Long categoryId) {
+		return blogRepository.findPostsByCategoryId(categoryId);
+	}
+	
+	public PostVo findPostById(Long postId) {
+		return blogRepository.findPostById(postId);
+	}
+	
 
 }

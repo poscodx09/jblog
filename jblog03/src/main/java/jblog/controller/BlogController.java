@@ -32,9 +32,11 @@ public class BlogController {
 	
 	@RequestMapping({"", "/{path1}", "/{path1}/{path2}"})
 	public String main(
+			@AuthUser UserVo authUser,
 			@PathVariable("userId") String userId,
 			@PathVariable("path1") Optional<Long> path1,
-			@PathVariable("path2") Optional<Long> path2)
+			@PathVariable("path2") Optional<Long> path2,
+			Model model)
 	{
 		Long categoryId = 0L;
 		Long postId = 0L;
@@ -50,6 +52,13 @@ public class BlogController {
 		// categoryId == 0L -> default categoryId set
 		// postId == 0L -> default postId set
 		
+		PostVo post = blogService.findPostById(postId);
+		List<PostVo> postList = blogService.findPostsByCategoryId(categoryId);
+		List<CategoryVo> categoryList = blogService.selectCategories(authUser.getId());
+		
+		model.addAttribute("post", post);
+		model.addAttribute("postList", postList);
+		model.addAttribute("categoryList", categoryList);
 		
 		
 		return "blog/main";

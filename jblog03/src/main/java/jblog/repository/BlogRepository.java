@@ -1,6 +1,7 @@
 package jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -39,5 +40,15 @@ public class BlogRepository {
 	// 카테고리 목록 조회
 	public List<CategoryVo> selectCategories(String blogId) {
 		return sqlSession.selectList("blog.selectCategories", blogId);
+	}
+
+	// 카테고리 내 게시글 조회
+	public List<PostVo> findPostsByCategoryId(Long categoryId) {
+		return sqlSession.selectList("blog.findPostsByCategoryId", categoryId);
+	}
+
+	// 게시글 조회
+	public PostVo findPostById(Long postId) {
+		return sqlSession.selectOne("blog.findPostById", postId);
 	}
 }
