@@ -54,7 +54,7 @@
 	<!-- 카테고리 목록 조회 -->
 	<select id="selectCategories" resultType="categoryvo">
 		<![CDATA[
-			select id, name, description from category where blog_id=#{blogId};
+			select category.id, name, description, count(category_id) as postCnt from category left join post on category.id = category_id where blog_id=#{blogId} group by category.id, post.id;
 		]]>
 	</select>
 	

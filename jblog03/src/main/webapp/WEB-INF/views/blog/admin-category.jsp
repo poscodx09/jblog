@@ -27,7 +27,7 @@
 			      		<tr>
 							<td>${status.index + 1}</td>
 							<td>${vo.name }</td>
-							<td>10</td>
+							<td>${vo.postCnt }</td>
 							<td>${vo.description }</td>
 							<td>
 								<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/${vo.id}">

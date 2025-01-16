@@ -5,6 +5,7 @@ public class CategoryVo {
 	private String name;
 	private String description;
 	private String blogId;
+	private int postCnt;
 	
 	public int getId() {
 		return id;
@@ -29,6 +30,13 @@ public class CategoryVo {
 	}
 	public void setBlogId(String blogId) {
 		this.blogId = blogId;
+	}
+	
+	public int getPostCnt() {
+		return postCnt;
+	}
+	public void setPostCnt(int postCnt) {
+		this.postCnt = postCnt;
 	}
 	
 	@Override
