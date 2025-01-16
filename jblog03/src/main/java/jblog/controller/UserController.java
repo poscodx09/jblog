@@ -43,8 +43,8 @@ public class UserController {
 			return "user/join";
 		}
 		userService.join(userVo);
-//		blogService.addCategory(null);
 		blogService.addBlog(userVo.getId());
+		blogService.addDefaultCategory(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 	

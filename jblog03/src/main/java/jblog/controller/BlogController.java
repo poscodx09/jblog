@@ -3,7 +3,6 @@ package jblog.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,8 +61,8 @@ public class BlogController {
 		// categoryId == 0L -> default categoryId set
 		// postId == 0L -> default postId set
 		
-		PostVo post = blogService.findPostById(postId, categoryId);
-		List<PostVo> postList = blogService.findPostsByCategoryId(categoryId);
+		PostVo post = blogService.findPostById(userId, postId, categoryId);
+		List<PostVo> postList = blogService.findPostsByCategoryId(userId, categoryId);
 		List<CategoryVo> categoryList = blogService.selectCategories(authUser.getId());
 		
 		
