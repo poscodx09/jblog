@@ -62,7 +62,7 @@ public class BlogController {
 		// categoryId == 0L -> default categoryId set
 		// postId == 0L -> default postId set
 		
-		PostVo post = blogService.findPostById(postId);
+		PostVo post = blogService.findPostById(postId, categoryId);
 		List<PostVo> postList = blogService.findPostsByCategoryId(categoryId);
 		List<CategoryVo> categoryList = blogService.selectCategories(authUser.getId());
 		

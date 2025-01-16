@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import jblog.service.BlogService;
 import jblog.service.UserService;
 import jblog.vo.UserVo;
 
@@ -18,9 +19,11 @@ import jblog.vo.UserVo;
 public class UserController {
 	
 	private UserService userService;
+	private BlogService blogService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, BlogService blogService) {
 		this.userService = userService;
+		this.blogService = blogService;
 	}
 	
 	@GetMapping("/login")
@@ -40,6 +43,8 @@ public class UserController {
 			return "user/join";
 		}
 		userService.join(userVo);
+//		blogService.addCategory(null);
+		blogService.addBlog(userVo.getId());
 		return "redirect:/user/joinsuccess";
 	}
 	

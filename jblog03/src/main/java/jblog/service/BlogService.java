@@ -31,10 +31,21 @@ public class BlogService {
 	}
 	
 	public List<PostVo> findPostsByCategoryId(Long categoryId) {
+		if (categoryId == 0) {
+			return blogRepository.findAllposts();
+		}
 		return blogRepository.findPostsByCategoryId(categoryId);
 	}
 	
-	public PostVo findPostById(Long postId) {
+	public PostVo findPostById(Long postId, Long categoryId) {
+		// 카테고리가 선택되지 않은 경우 전체 글 중 최신 글 조회
+		if (categoryId == 0) {
+			return blogRepository.findFirstPost();
+		}
+		// 카테고리만 선택된 경우, 카테고리 내 첫번째 글 조회
+		else if (postId == 0) {
+			return blogRepository.findFirstPostOfCategory(categoryId);
+		}
 		return blogRepository.findPostById(postId);
 	}
 
@@ -44,6 +55,13 @@ public class BlogService {
 
 	public void updateBlog(BlogVo blogVo) {
 		blogRepository.updateBlog(blogVo);
+	}
+
+	public void addBlog(String id) {
+		BlogVo vo = new BlogVo();
+		vo.setId(id);
+		vo.setTitle(id + "의 블로그");
+		blogRepository.insertBlog(vo);
 	}
 	
 

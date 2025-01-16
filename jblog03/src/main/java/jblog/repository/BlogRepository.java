@@ -43,9 +43,14 @@ public class BlogRepository {
 		return sqlSession.selectList("blog.selectCategories", blogId);
 	}
 
-	// 카테고리 내 게시글 조회
+	// 카테고리 내 게시글 목록 조회
 	public List<PostVo> findPostsByCategoryId(Long categoryId) {
 		return sqlSession.selectList("blog.findPostsByCategoryId", categoryId);
+	}
+	
+	// 전체 게시글 목록 조회
+	public List<PostVo> findAllposts() {
+		return sqlSession.selectList("blog.findAllPosts");
 	}
 
 	// 게시글 조회
@@ -53,12 +58,29 @@ public class BlogRepository {
 		return sqlSession.selectOne("blog.findPostById", postId);
 	}
 
+	// 블로그 정보 조회
 	public BlogVo findBlogById(String blogId) {
 		return sqlSession.selectOne("blog.findBlogById", blogId);
 	}
 
+	// 블로그 정보 수정
 	public void updateBlog(BlogVo blogVo) {
-		System.out.println("blog3" + blogVo);
 		sqlSession.update("blog.updateBlog", blogVo);
 	}
+
+	// 전체 글 중 첫번째 게시글 조회
+	public PostVo findFirstPost() {
+		return sqlSession.selectOne("blog.findFirstPost");
+	}
+
+	// 카테고리에서 첫번째 게시글 조회
+	public PostVo findFirstPostOfCategory(Long categoryId) {
+		return sqlSession.selectOne("blog.findFirstPostOfCategory", categoryId);
+	}
+
+	public void insertBlog(BlogVo blogVo) {
+		System.out.println("blog222" + blogVo);
+		sqlSession.insert("blog.insertBlog");
+	}
+
 }
