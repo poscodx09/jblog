@@ -32,7 +32,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/join")
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
 	
