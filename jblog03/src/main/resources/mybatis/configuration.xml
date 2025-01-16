@@ -5,6 +5,7 @@
 		<typeAlias type="jblog.vo.UserVo" alias="uservo" />
 		<typeAlias type="jblog.vo.PostVo" alias="postvo" />
 		<typeAlias type="jblog.vo.CategoryVo" alias="categoryvo" />
+		<typeAlias type="jblog.vo.BlogVo" alias="blogvo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />

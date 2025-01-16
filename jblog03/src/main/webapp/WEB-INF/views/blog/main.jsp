@@ -22,7 +22,7 @@
 				</div>
 				<ul class="blog-list">
 					<c:forEach items="${postList }" var="postVo" varStatus="status">
-						<li><a href="${pageContext.request.contextPath }/${authUser.id}/${categoryVo.id}/${postVo.id}">${postVo.title}</a> <span>${postVo.regDate }</span>	</li>
+						<li><a href="${pageContext.request.contextPath }/${authUser.id}/${postVo.categoryId}/${postVo.id}">${postVo.title}</a> <span>${postVo.regDate }</span>	</li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -30,7 +30,7 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+				<img src="${pageContext.request.contextPath}${blogVo.profile}">
 			</div>
 		</div>
 
@@ -42,12 +42,7 @@
 				</c:forEach>
 			</ul>
 		</div>
-		
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>

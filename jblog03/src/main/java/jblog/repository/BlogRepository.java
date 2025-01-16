@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import jblog.vo.BlogVo;
 import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
 
@@ -50,5 +51,14 @@ public class BlogRepository {
 	// 게시글 조회
 	public PostVo findPostById(Long postId) {
 		return sqlSession.selectOne("blog.findPostById", postId);
+	}
+
+	public BlogVo findBlogById(String blogId) {
+		return sqlSession.selectOne("blog.findBlogById", blogId);
+	}
+
+	public void updateBlog(BlogVo blogVo) {
+		System.out.println("blog3" + blogVo);
+		sqlSession.update("blog.updateBlog", blogVo);
 	}
 }

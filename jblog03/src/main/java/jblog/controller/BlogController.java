@@ -3,6 +3,7 @@ package jblog.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,11 +12,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
 import jblog.security.Auth;
 import jblog.security.AuthUser;
 import jblog.service.BlogService;
+import jblog.service.FileUploadService;
+import jblog.vo.BlogVo;
 import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
 import jblog.vo.UserVo;
@@ -25,9 +31,13 @@ import jblog.vo.UserVo;
 public class BlogController {
 	
 	private BlogService blogService;
+	private final FileUploadService fileUploadService;
+	private final ServletContext servletContext;
 	
-	public BlogController(BlogService blogService) {
+	public BlogController(BlogService blogService, FileUploadService fileUploadService, ServletContext servletContext) {
 		this.blogService = blogService;
+		this.fileUploadService = fileUploadService;
+		this.servletContext = servletContext;
 	}
 	
 	@RequestMapping({"", "/{path1}", "/{path1}/{path2}"})
@@ -56,6 +66,7 @@ public class BlogController {
 		List<PostVo> postList = blogService.findPostsByCategoryId(categoryId);
 		List<CategoryVo> categoryList = blogService.selectCategories(authUser.getId());
 		
+		
 		model.addAttribute("post", post);
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
@@ -66,8 +77,38 @@ public class BlogController {
 	
 	@Auth
 	@GetMapping("/admin")
-	public String adminDefault() {
+	public String adminDefault(@AuthUser UserVo authUser, Model model) {
+		BlogVo blogVo = blogService.getBlog(authUser.getId());
+		model.addAttribute("blogVo", blogVo);
 		return "blog/admin-default";
+	}
+	
+	@Auth
+	@PostMapping("/admin/update")
+	public String adminUpdate(
+			@AuthUser UserVo authUser,
+			@RequestParam("title") String title,
+			@RequestParam("profile") String profileUrl,
+			@RequestParam("file") MultipartFile multipartFile,
+			Model model) {
+		
+		BlogVo blogVo = new BlogVo();
+		blogVo.setId(authUser.getId());
+		blogVo.setTitle(title);
+		blogVo.setProfile(profileUrl);
+		
+		
+		String profile = fileUploadService.restore(multipartFile);
+		if(profile != null) {
+			blogVo.setProfile(profile);
+		}
+		
+		blogService.updateBlog(blogVo);
+		
+		// update servlet context bean
+		servletContext.setAttribute("blogVo", blogVo);
+		
+		return "redirect:/" + authUser.getId() + "/admin";
 	}
 	
 	
@@ -118,4 +159,6 @@ public class BlogController {
 		blogService.addCategory(categoryVo);
 		return "redirect:/" + userId + "/admin/category";
 	}
+	
+	
 }

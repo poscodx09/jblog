@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import jblog.repository.BlogRepository;
+import jblog.vo.BlogVo;
 import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
 
@@ -35,6 +36,14 @@ public class BlogService {
 	
 	public PostVo findPostById(Long postId) {
 		return blogRepository.findPostById(postId);
+	}
+
+	public BlogVo getBlog(String blogId) {
+		return blogRepository.findBlogById(blogId);
+	}
+
+	public void updateBlog(BlogVo blogVo) {
+		blogRepository.updateBlog(blogVo);
 	}
 	
 
