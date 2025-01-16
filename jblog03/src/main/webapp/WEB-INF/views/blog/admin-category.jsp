@@ -29,7 +29,11 @@
 							<td>${vo.name }</td>
 							<td>10</td>
 							<td>${vo.description }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<td>
+								<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/${vo.id}">
+									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+								</a>
+							</td>
 						</tr>  
 		      		</c:forEach>
 				</table>

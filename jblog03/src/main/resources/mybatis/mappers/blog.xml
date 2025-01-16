@@ -70,6 +70,20 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCategoryById">
+		<![CDATA[
+		delete from category where id=#{categoryId};
+		]]>
+	</delete>
+	
+	<!-- 카테고리 내 전체 게시글 삭제 -->
+	<delete id="deletePostByCategoryId">
+		<![CDATA[
+		delete from post where category_id=#{categoryId};
+		]]>
+	</delete>
+	
 	<!-- 관리자 블로그 정보 조회 -->
 	<select id="findBlogById" resultType="blogvo">
 		<![CDATA[

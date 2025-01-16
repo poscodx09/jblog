@@ -74,4 +74,13 @@ public class BlogService {
 		blogRepository.insertBlog(vo);
 	}
 
+	public void deleteCategory(String categoryId) {
+		blogRepository.deleteCategory(categoryId);
+	}
+
+	public void deleteAllPostByCategoryId(String categoryId) {
+		blogRepository.deleteAllPostByCategoryId(categoryId);
+		
+	}
+
 }

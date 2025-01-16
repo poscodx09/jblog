@@ -83,4 +83,14 @@ public class BlogRepository {
 		sqlSession.insert("blog.insertBlog", blogVo);
 	}
 
+	public void deleteCategory(String categoryId) {
+		sqlSession.insert("blog.deleteCategoryById", categoryId);
+		
+	}
+
+	public void deleteAllPostByCategoryId(String categoryId) {
+		sqlSession.insert("blog.deletePostByCategoryId", categoryId);
+		
+	}
+
 }

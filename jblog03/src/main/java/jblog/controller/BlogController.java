@@ -130,7 +130,7 @@ public class BlogController {
 		System.out.println(userId);
 		System.out.println("post" + postVo);
 		blogService.addPost(postVo);
-		return "redirect:/" + userId + "/admin";
+		return "redirect:/" + userId;
 	}
 	
 	@Auth
@@ -139,6 +139,16 @@ public class BlogController {
 		List<CategoryVo> list = blogService.selectCategories(authUser.getId());
 		model.addAttribute("categoryList", list);
 		return "blog/admin-category";
+	}
+	
+	@Auth
+	@GetMapping("/admin/category/{id}")
+	public String category(
+			@PathVariable(value="userId") String userId,
+			@PathVariable(value="id") String categoryId) {
+		blogService.deleteAllPostByCategoryId(categoryId);
+		blogService.deleteCategory(categoryId);
+		return "redirect:/" + userId + "/admin/category";
 	}
 	
 	@Auth
