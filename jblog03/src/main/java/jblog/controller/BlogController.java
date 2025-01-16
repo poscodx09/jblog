@@ -148,7 +148,6 @@ public class BlogController {
 			@PathVariable(value="id") Long categoryId,
 			Model model
 			) {
-//		blogService.deleteAllPostByCategoryId(categoryId);
 		List<PostVo> list = blogService.findPostsByCategoryId(userId, categoryId);
 		if (list.size() == 0) {
 			blogService.deleteCategory(categoryId);
