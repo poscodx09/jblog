@@ -83,7 +83,7 @@ public class BlogRepository {
 		sqlSession.insert("blog.insertBlog", blogVo);
 	}
 
-	public void deleteCategory(String categoryId) {
+	public void deleteCategory(Long categoryId) {
 		sqlSession.insert("blog.deleteCategoryById", categoryId);
 		
 	}

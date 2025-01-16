@@ -30,9 +30,11 @@
 							<td>${vo.postCnt }</td>
 							<td>${vo.description }</td>
 							<td>
+								<c:if test="${vo.postCnt == 0}">
 								<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/${vo.id}">
 									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 								</a>
+								</c:if>
 							</td>
 						</tr>  
 		      		</c:forEach>

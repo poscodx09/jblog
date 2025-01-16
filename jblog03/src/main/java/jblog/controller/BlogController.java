@@ -145,9 +145,14 @@ public class BlogController {
 	@GetMapping("/admin/category/{id}")
 	public String category(
 			@PathVariable(value="userId") String userId,
-			@PathVariable(value="id") String categoryId) {
-		blogService.deleteAllPostByCategoryId(categoryId);
-		blogService.deleteCategory(categoryId);
+			@PathVariable(value="id") Long categoryId,
+			Model model
+			) {
+//		blogService.deleteAllPostByCategoryId(categoryId);
+		List<PostVo> list = blogService.findPostsByCategoryId(userId, categoryId);
+		if (list.size() == 0) {
+			blogService.deleteCategory(categoryId);
+		}
 		return "redirect:/" + userId + "/admin/category";
 	}
 	

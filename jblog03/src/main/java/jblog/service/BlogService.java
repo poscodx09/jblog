@@ -74,7 +74,7 @@ public class BlogService {
 		blogRepository.insertBlog(vo);
 	}
 
-	public void deleteCategory(String categoryId) {
+	public void deleteCategory(Long categoryId) {
 		blogRepository.deleteCategory(categoryId);
 	}
 
